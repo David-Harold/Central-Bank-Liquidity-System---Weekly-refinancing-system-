@@ -1,3 +1,4 @@
+from database.db import fetch_one
 from validation.eligibility_check import check_eligibility
 from validation.collateral_admissibility_check import check_collateral_admissibility
 from validation.collateral_value_after_haircut import check_collateral_value
@@ -6,7 +7,12 @@ def run_validation(request_id):
     """
     Run the validation flow for a specific commercial bank request.
     """
-    eligibility_result = check_eligibility(request_id)
+    req = fetch_one(
+        "SELECT bank_id FROM requests WHERE request_id = %s",
+        (request_id,),
+    )
+    bank_id = req["bank_id"] if req else None
+    eligibility_result = check_eligibility(bank_id)
     collateral_admissibility_result = check_collateral_admissibility(request_id)
     collateral_value_result = check_collateral_value(request_id)
     borrowing_limit_result = check_borrowing_limit(request_id)

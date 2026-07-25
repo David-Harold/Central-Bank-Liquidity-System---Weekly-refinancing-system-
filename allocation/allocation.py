@@ -3,7 +3,7 @@ Component 3 - Allocation & Settlement Logic (Tasks 3.1-3.5).
 """
 import datetime
 
-import db
+import database.db as db
 
 
 class AllocationError(Exception):

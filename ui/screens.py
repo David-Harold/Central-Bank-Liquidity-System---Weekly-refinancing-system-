@@ -4,8 +4,8 @@ UI screens for Tasks 4.5, 4.7, 4.11, 4.12.
 Each screen function prints to the console AND returns a structured result,
 so it can be driven by menu.py and also asserted on directly in tests.
 """
-import db
-import allocation
+import database.db as db
+import allocation.allocation as allocation
 import reporting
 import browse
 

@@ -35,7 +35,6 @@ def open_operation(rate):
         "INSERT INTO weekly_operations (policy_rate, start_date, end_date, status) "
         "VALUES (%s,%s,%s,'open')",
         (rate, today, end_date),
-        commit=True,
     )
     return {
         "operation_id": op_id,
@@ -54,13 +53,8 @@ def close_operation(operation_id):
         raise AllocationError(f"Operation {operation_id} is already '{op['status']}'.")
 
     db.execute_query(
-<<<<<<< HEAD
-        "UPDATE weekly_operations SET status='Closed' WHERE operation_id=%s",
-=======
         "UPDATE weekly_operations SET status='closed' WHERE operation_id=%s",
->>>>>>> ecae3a3b18086a1f5f14f0aa04df0494d488b147
         (operation_id,),
-        commit=True,
     )
     return {"operation_id": operation_id, "status": "closed"}
 

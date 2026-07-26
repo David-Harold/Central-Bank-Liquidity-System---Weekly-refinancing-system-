@@ -41,11 +41,11 @@ def full_operation_history():
 
 def rejection_log(viewer, bank_id=None):
     scoped = _scope_bank_id(viewer, bank_id)
-    query = """SELECT rj.rejection_id, rj.request_id, r.bank_id, b.name AS bank_name,
+    query = """SELECT rj.rejection_id, rj.request_id, r.bank_id, b.bank_name,
                       r.operation_id, r.requested_amount, rj.rejection_reason, rj.rejection_date
                FROM rejections rj
                JOIN requests r ON r.request_id = rj.request_id
-               JOIN banks b ON b.bank_id = r.bank_id"""
+               JOIN commercial_banks b ON b.bank_id = r.bank_id"""
     params = ()
     if scoped is not None:
         query += " WHERE r.bank_id=%s"
@@ -56,13 +56,13 @@ def rejection_log(viewer, bank_id=None):
 
 def per_bank_borrowing_history(viewer, bank_id=None):
     scoped = _scope_bank_id(viewer, bank_id)
-    query = """SELECT r.request_id, r.bank_id, b.name AS bank_name, r.operation_id,
+    query = """SELECT r.request_id, r.bank_id, b.bank_name, r.operation_id,
                       r.requested_amount, r.status, a.approved_amount, a.policy_rate,
-                      s.settlement_date, s.repayment_date, s.interest
+                      s.settlement_date, s.repayment_date, s.interest_amount AS interest
                FROM requests r
-               JOIN banks b ON b.bank_id = r.bank_id
+               JOIN commercial_banks b ON b.bank_id = r.bank_id
                LEFT JOIN allotments a ON a.request_id = r.request_id
-               LEFT JOIN settlements s ON s.request_id = r.request_id"""
+               LEFT JOIN settlements s ON s.allotment_id = a.allotment_id"""
     params = ()
     if scoped is not None:
         query += " WHERE r.bank_id=%s"
@@ -73,16 +73,16 @@ def per_bank_borrowing_history(viewer, bank_id=None):
 
 def collateral_inventory_report(viewer, bank_id=None):
     scoped = _scope_bank_id(viewer, bank_id)
-    query = """SELECT ci.asset_id, ci.bank_id, b.name AS bank_name,
-                      ct.name AS collateral_type, ct.haircut_pct, ci.declared_value
+    query = """SELECT ci.inventory_id, ci.bank_id, b.bank_name,
+                      ct.type_name AS collateral_type, ct.haircut_percentage, ci.declared_value
                FROM collateral_inventory ci
-               JOIN banks b ON b.bank_id = ci.bank_id
-               JOIN collateral_types ct ON ct.type_id = ci.type_id"""
+               JOIN commercial_banks b ON b.bank_id = ci.bank_id
+               JOIN collateral_types ct ON ct.collateral_type_id = ci.collateral_type_id"""
     params = ()
     if scoped is not None:
         query += " WHERE ci.bank_id=%s"
         params = (scoped,)
-    query += " ORDER BY ci.bank_id, ci.asset_id"
+    query += " ORDER BY ci.bank_id, ci.inventory_id"
     return db.fetch_all(query, params)
 
 
@@ -109,7 +109,7 @@ def screen_reports(viewer):
     print(f"\nCollateral inventory ({len(inventory)} rows):")
     for row in inventory:
         print(
-            f"  asset#{row['asset_id']} bank={row['bank_name']} "
+            f"  asset#{row['inventory_id']} bank={row['bank_name']} "
             f"type={row['collateral_type']} value={row['declared_value']}"
         )
 

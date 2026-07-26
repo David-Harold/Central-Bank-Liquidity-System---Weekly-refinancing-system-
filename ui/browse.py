@@ -18,15 +18,15 @@ def operation_detail(operation_id, viewer):
     if not summary:
         return None
 
-    query = """SELECT r.request_id, r.bank_id, b.name AS bank_name, r.requested_amount, r.status,
+    query = """SELECT r.request_id, r.bank_id, b.bank_name, r.requested_amount, r.status,
                       a.approved_amount, a.policy_rate,
                       rj.rejection_reason,
-                      s.settlement_date, s.repayment_date, s.interest
+                      s.settlement_date, s.repayment_date, s.interest_amount AS interest
                FROM requests r
-               JOIN banks b ON b.bank_id = r.bank_id
+               JOIN commercial_banks b ON b.bank_id = r.bank_id
                LEFT JOIN allotments a ON a.request_id = r.request_id
                LEFT JOIN rejections rj ON rj.request_id = r.request_id
-               LEFT JOIN settlements s ON s.request_id = r.request_id
+               LEFT JOIN settlements s ON s.allotment_id = a.allotment_id
                WHERE r.operation_id=%s"""
     params = (operation_id,)
     if viewer["role"] != "central_bank":

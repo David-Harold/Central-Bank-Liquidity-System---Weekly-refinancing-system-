@@ -27,7 +27,7 @@ def execute_query(query, params=None):
     try:
         cursor.execute(query, params)
         connection.commit()
-        return cursor
+        return cursor.lastrowid if cursor.lastrowid else cursor.rowcount
     except Error as e:
         print(f"Error executing query: {e}")
         return None

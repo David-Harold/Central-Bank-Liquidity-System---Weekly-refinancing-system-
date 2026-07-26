@@ -1,17 +1,17 @@
 # Central Bank Liquidity System — Weekly Refinancing System
 
-A Python program, backed by a MySQL database, simulating a weekly central bank liquidity operation. The Central Bank sets the rules (eligibility, collateral types, borrowing limits), opens a weekly operation, and reviews loan requests from Commercial Banks, which pledge collateral against the loans they request.
+A Python program, backed by a database, simulating a weekly central bank liquidity operation. The Central Bank sets the rules (eligibility, collateral types, borrowing limits), opens a weekly operation, and reviews loan requests from Commercial Banks, which pledge collateral against the loans they request.
 
 ## Contributors
 
 | Name | GitHub |
 |---|---|
-| David-Harold E. Koffi-Essiben | @David-Harold |
-| Cynthia Umwali | @cynthiaumwali |
-| Isimbi Nina Henriette | @Isimbi-Nina |
-| Aubin Karaha | @aubin-karaha |
-| Shyaka Carrick Ngago | @shyakanga |
-| Chlomi Justifie Gutabarwa | @xCHLOMIx |
+| David-Harold E. Koffi-Essiben | [@David-Harold](https://github.com/David-Harold) |
+| Cynthia Umwali | [@cynthiaumwali](https://github.com/cynthiaumwali) |
+| Isimbi Nina Henriette | [@Isimbi-Nina](https://github.com/Isimbi-Nina) |
+| Aubin Karaha | [@aubin-karaha](https://github.com/aubin-karaha) |
+| Shyaka Carrick Ngago | [@shyakanga](https://github.com/shyakanga) |
+| Chlomi Justifie Gutabarwa | [@xCHLOMIx](https://github.com/xCHLOMIx) |
 
 ## Project structure
 

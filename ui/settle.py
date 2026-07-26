@@ -10,10 +10,11 @@ from allocation import settlement
 
 def screen_settle_request(viewer):
     pending_settlement = db.fetch_all(
-        """SELECT r.request_id, r.bank_id, b.name AS bank_name, r.requested_amount
+        """SELECT r.request_id, r.bank_id, b.bank_name, r.requested_amount
            FROM requests r
-           JOIN banks b ON b.bank_id = r.bank_id
-           LEFT JOIN settlements s ON s.request_id = r.request_id
+           JOIN commercial_banks b ON b.bank_id = r.bank_id
+           JOIN allotments a ON a.request_id = r.request_id
+           LEFT JOIN settlements s ON s.allotment_id = a.allotment_id
            WHERE r.status='successful' AND s.settlement_id IS NULL
            ORDER BY r.request_id"""
     )

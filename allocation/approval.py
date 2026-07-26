@@ -17,7 +17,7 @@ def approve_request(request_id, rate=None):
     request = db.fetch_one("SELECT * FROM requests WHERE request_id=%s", (request_id,))
     if not request:
         raise AllocationError(f"Request {request_id} not found.")
-    if request["status"] != "Pending":
+    if request["status"].lower() != "pending":
         raise AllocationError(f"Request {request_id} is '{request['status']}', not Pending.")
 
     if rate is None:
@@ -30,12 +30,10 @@ def approve_request(request_id, rate=None):
     db.execute_query(
         "UPDATE requests SET status='successful' WHERE request_id=%s",
         (request_id,),
-        commit=True,
     )
     db.execute_query(
         "INSERT INTO allotments (request_id, approved_amount, policy_rate) VALUES (%s,%s,%s)",
         (request_id, request["requested_amount"], rate),
-        commit=True,
     )
     return {
         "request_id": request_id,

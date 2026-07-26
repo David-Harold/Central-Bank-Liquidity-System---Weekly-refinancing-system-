@@ -22,7 +22,7 @@ def reject_request(request_id, reason):
         commit=True,
     )
     db.execute_query(
-        "INSERT INTO rejections (request_id, reason) VALUES (%s,%s)",
+        "INSERT INTO rejections (request_id, rejection_reason) VALUES (%s,%s)",
         (request_id, reason.strip()),
         commit=True,
     )

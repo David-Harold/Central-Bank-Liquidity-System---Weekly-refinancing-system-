@@ -17,7 +17,7 @@ CREATE TABLE commercial_banks (
 	borrowing_limit DECIMAL(15,2) NOT NULL,
 	created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
-
+INSERT INTO commercial_banks (bank_name, password_hash, eligibility, borrowing_limit) VALUES("bk", "$2b$10$S8cpMTS5f8.WpmwwlV2UIe9CqWbk6TG4qOjO837YOudAN3YG639zq", "eligible", 50000.00);
 CREATE TABLE collateral_types (
 	collateral_type_id INT PRIMARY KEY AUTO_INCREMENT,
 	type_name VARCHAR(250) NOT NULL,

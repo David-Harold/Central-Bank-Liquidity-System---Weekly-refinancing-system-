@@ -42,7 +42,7 @@ def full_operation_history():
 def rejection_log(viewer, bank_id=None):
     scoped = _scope_bank_id(viewer, bank_id)
     query = """SELECT rj.rejection_id, rj.request_id, r.bank_id, b.name AS bank_name,
-                      r.operation_id, r.amount, rj.reason, rj.rejected_at
+                      r.operation_id, r.requested_amount, rj.rejection_reason, rj.rejection_date
                FROM rejections rj
                JOIN requests r ON r.request_id = rj.request_id
                JOIN banks b ON b.bank_id = r.bank_id"""
@@ -50,14 +50,14 @@ def rejection_log(viewer, bank_id=None):
     if scoped is not None:
         query += " WHERE r.bank_id=%s"
         params = (scoped,)
-    query += " ORDER BY rj.rejected_at DESC"
+    query += " ORDER BY rj.rejection_date DESC"
     return db.fetch_all(query, params)
 
 
 def per_bank_borrowing_history(viewer, bank_id=None):
     scoped = _scope_bank_id(viewer, bank_id)
     query = """SELECT r.request_id, r.bank_id, b.name AS bank_name, r.operation_id,
-                      r.amount, r.status, a.approved_amount, a.rate,
+                      r.requested_amount, r.status, a.approved_amount, a.policy_rate,
                       s.settlement_date, s.repayment_date, s.interest
                FROM requests r
                JOIN banks b ON b.bank_id = r.bank_id
@@ -97,13 +97,13 @@ def screen_reports(viewer):
     for row in borrowing:
         print(
             f"  req#{row['request_id']} bank={row['bank_name']} "
-            f"amount={row['amount']} status={row['status']}"
+            f"amount={row['requested_amount']} status={row['status']}"
         )
 
     rejections = rejection_log(viewer)
     print(f"\nRejection log ({len(rejections)} rows):")
     for row in rejections:
-        print(f"  req#{row['request_id']} bank={row['bank_name']} reason={row['reason']}")
+        print(f"  req#{row['request_id']} bank={row['bank_name']} reason={row['rejection_reason']}")
 
     inventory = collateral_inventory_report(viewer)
     print(f"\nCollateral inventory ({len(inventory)} rows):")

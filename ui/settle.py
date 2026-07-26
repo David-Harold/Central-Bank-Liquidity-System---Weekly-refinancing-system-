@@ -10,7 +10,7 @@ from allocation import settlement
 
 def screen_settle_request(viewer):
     pending_settlement = db.fetch_all(
-        """SELECT r.request_id, r.bank_id, b.name AS bank_name, r.amount
+        """SELECT r.request_id, r.bank_id, b.name AS bank_name, r.requested_amount
            FROM requests r
            JOIN banks b ON b.bank_id = r.bank_id
            LEFT JOIN settlements s ON s.request_id = r.request_id
@@ -22,7 +22,7 @@ def screen_settle_request(viewer):
         return pending_settlement
     print("Approved requests awaiting settlement:")
     for r in pending_settlement:
-        print(f"  #{r['request_id']}  {r['bank_name']}  amount={r['amount']}")
+        print(f"  #{r['request_id']}  {r['bank_name']}  amount={r['requested_amount']}")
     return pending_settlement
 
 

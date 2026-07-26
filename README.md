@@ -18,16 +18,16 @@ A Python program, backed by a MySQL database, simulating a weekly central bank l
 Central-Bank-Liquidity-System
 │
 ├── database/
-│ ├── db_schema.sql ──> creates all 9 tables
-│ └── db.py ──> shared MySQL connection module
+│   ├── db_schema.sql   ──> creates all 9 tables
+│   └── db.py           ──> shared MySQL connection module
 │
-├── validation/ ──> the 4 loan checks + orchestrator
+├── validation/         ──> the 4 loan checks + orchestrator
 │
-├── allocation/ ──> approve, reject, interest, settlement
+├── allocation/         ──> approve, reject, interest, settlement
 │
-├── ui/ ──> Central Bank & Commercial Bank menu screens
+├── ui/                 ──> Central Bank & Commercial Bank menu screens
 │
-└── main.py ──> program entry point, run this to start
+└── main.py             ──> program entry point, run this to start
 
 
 ## How to run it

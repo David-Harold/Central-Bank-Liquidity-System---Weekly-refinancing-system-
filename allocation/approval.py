@@ -17,8 +17,8 @@ def approve_request(request_id, rate=None):
     request = db.fetch_one("SELECT * FROM requests WHERE request_id=%s", (request_id,))
     if not request:
         raise AllocationError(f"Request {request_id} not found.")
-    if request["status"] != "pending":
-        raise AllocationError(f"Request {request_id} is '{request['status']}', not pending.")
+    if request["status"] != "Pending":
+        raise AllocationError(f"Request {request_id} is '{request['status']}', not Pending.")
 
     if rate is None:
         op = db.fetch_one(

@@ -4,8 +4,8 @@ Task 4.7 - Central Bank: settle an approved request.
 Lists approved-but-unsettled requests, lets the Central Bank pick one, and
 settles it via Component 3's settlement.py (Task 3.4).
 """
-import db
-import settlement
+import database.db as db
+from allocation import settlement
 
 
 def screen_settle_request(viewer):

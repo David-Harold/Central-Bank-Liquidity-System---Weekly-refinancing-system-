@@ -3,7 +3,7 @@ Task 4.5 - Central Bank: open/close weekly operation.
 
 Thin screens wired to Component 3's operations.py (Task 3.5) logic.
 """
-import operations
+from allocation import operations
 
 
 def screen_open_operation(rate):

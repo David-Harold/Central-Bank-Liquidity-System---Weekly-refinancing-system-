@@ -5,8 +5,8 @@ Nothing in this file ever calls INSERT/UPDATE/DELETE - it's SELECT-only by
 construction, which is how "no edit/delete option exists anywhere in this
 screen" is actually enforced rather than just promised.
 """
-import db
-import reports
+import database.db as db
+from ui import reports
 
 
 def list_past_operations():

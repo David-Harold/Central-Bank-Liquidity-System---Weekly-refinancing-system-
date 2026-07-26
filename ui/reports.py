@@ -4,7 +4,7 @@ Task 4.11 - Reporting module.
 Central Bank sees every bank's data in every report. A Bank only ever sees
 rows matching its own bank_id, with no way to override that from the menu.
 """
-import db
+import database.db as db
 
 
 def _scope_bank_id(viewer, requested_bank_id=None):

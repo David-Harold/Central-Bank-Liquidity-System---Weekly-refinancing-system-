@@ -30,5 +30,9 @@ def screen_review_pending_request(request_id):
          return approval_result
      else:
          show_validation_result(req_validation_result)
-         rejection_result = reject_request(request_id)
+         rejection_message = input("Enter rejection reason: ")
+         while not rejection_message.strip():   
+             print("Rejection reason cannot be empty. Please provide a valid reason.")
+             rejection_message = input("Enter rejection reason: ")
+         rejection_result = reject_request(request_id, rejection_message)
          return rejection_result

@@ -31,7 +31,7 @@ def settle_request(request_id, today=None):
 
     settlement_date = today or datetime.date.today()
     repayment_date = settlement_date + datetime.timedelta(days=7)
-    interest = calculate_interest(allotment["approved_amount"], allotment["rate"], days=7)
+    interest = calculate_interest(allotment["approved_amount"], allotment["policy_rate"], days=7)
 
     db.execute_query(
         """INSERT INTO settlements

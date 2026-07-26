@@ -3,9 +3,9 @@ Task 3.4 - Settlement logic.
 """
 import datetime
 
-import db
-from operations import AllocationError
-from interest import calculate_interest
+import database.db as db
+from allocation.operations import AllocationError
+from allocation.interest import calculate_interest
 
 
 def settle_request(request_id, today=None):

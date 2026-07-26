@@ -1,8 +1,8 @@
 """
 Task 3.1 - Approval handling.
 """
-import db
-from operations import AllocationError
+import database.db as db
+from allocation.operations import AllocationError
 
 
 def approve_request(request_id, rate=None):

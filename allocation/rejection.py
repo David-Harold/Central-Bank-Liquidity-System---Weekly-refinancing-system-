@@ -1,8 +1,8 @@
 """
 Task 3.2 - Rejection handling.
 """
-import db
-from operations import AllocationError
+import database.db as db
+from allocation.operations import AllocationError
 
 
 def reject_request(request_id, reason):

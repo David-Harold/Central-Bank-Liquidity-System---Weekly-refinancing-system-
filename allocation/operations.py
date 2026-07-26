@@ -8,7 +8,7 @@ errors from any of them.
 """
 import datetime
 
-import db
+import database.db as db
 
 
 class AllocationError(Exception):

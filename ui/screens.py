@@ -5,7 +5,7 @@ Each screen function prints to the console AND returns a structured result,
 so it can be driven by menu.py and also asserted on directly in tests.
 """
 import database.db as db
-import allocation.allocation as allocation
+from allocation import operations, settlement
 import reporting
 import browse
 
@@ -13,20 +13,20 @@ import browse
 # --- Task 4.5 --------------------------------------------------------------
 def screen_open_operation(rate):
     try:
-        result = allocation.open_operation(rate)
+        result = operations.open_operation(rate)
         print(f"Operation {result['operation_id']} opened at rate {result['policy_rate']}.")
         return result
-    except allocation.AllocationError as e:
+    except operations.AllocationError as e:
         print(f"Could not open operation: {e}")
         return None
 
 
 def screen_close_operation(operation_id):
     try:
-        result = allocation.close_operation(operation_id)
+        result = operations.close_operation(operation_id)
         print(f"Operation {operation_id} closed.")
         return result
-    except allocation.AllocationError as e:
+    except operations.AllocationError as e:
         print(f"Could not close operation: {e}")
         return None
 
@@ -53,7 +53,7 @@ def screen_settle_request(viewer):
 
 def settle_selected_request(request_id):
     try:
-        result = allocation.settle_request(request_id)
+        result = settlement.settle_request(request_id)
         print(
             f"Request {request_id} settled. "
             f"Settlement date: {result['settlement_date']}, "
@@ -61,7 +61,7 @@ def settle_selected_request(request_id):
             f"interest: {result['interest']}"
         )
         return result
-    except allocation.AllocationError as e:
+    except operations.AllocationError as e:
         print(f"Could not settle request {request_id}: {e}")
         return None
 

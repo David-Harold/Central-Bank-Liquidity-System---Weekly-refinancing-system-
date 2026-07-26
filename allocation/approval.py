@@ -41,5 +41,5 @@ def approve_request(request_id, rate=None):
         "request_id": request_id,
         "status": "successful",
         "approved_amount": float(request["requested_amount"]),
-        "rate": float(rate),
+        "policy_rate": float(rate),
     }

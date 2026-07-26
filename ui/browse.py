@@ -18,9 +18,9 @@ def operation_detail(operation_id, viewer):
     if not summary:
         return None
 
-    query = """SELECT r.request_id, r.bank_id, b.name AS bank_name, r.amount, r.status,
-                      a.approved_amount, a.rate,
-                      rj.reason AS rejection_reason,
+    query = """SELECT r.request_id, r.bank_id, b.name AS bank_name, r.requested_amount, r.status,
+                      a.approved_amount, a.policy_rate,
+                      rj.rejection_reason,
                       s.settlement_date, s.repayment_date, s.interest
                FROM requests r
                JOIN banks b ON b.bank_id = r.bank_id
@@ -42,7 +42,7 @@ def screen_browse_past_operations(viewer):
     ops = list_past_operations()
     print("\n=== PAST OPERATIONS ===")
     for op in ops:
-        print(f"  #{op['operation_id']} status={op['status']} rate={op['policy_rate']} opened={op['opened_at']}")
+        print(f"  #{op['operation_id']} status={op['status']} start={op['start_date']} end={op['end_date']}")
     return ops
 
 
@@ -54,5 +54,5 @@ def screen_operation_detail(operation_id, viewer):
     print(f"\n=== OPERATION {operation_id} DETAIL (read-only) ===")
     print(detail["summary"])
     for r in detail["requests"]:
-        print(f"  req#{r['request_id']} bank={r['bank_name']} amount={r['amount']} status={r['status']}")
+        print(f"  req#{r['request_id']} bank={r['bank_name']} amount={r['requested_amount']} status={r['status']}")
     return detail

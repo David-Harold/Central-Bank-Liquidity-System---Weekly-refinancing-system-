@@ -33,13 +33,13 @@ def approve_request(request_id, rate=None):
         commit=True,
     )
     db.execute_query(
-        "INSERT INTO allotments (request_id, approved_amount, rate) VALUES (%s,%s,%s)",
-        (request_id, request["amount"], rate),
+        "INSERT INTO allotments (request_id, approved_amount, policy_rate) VALUES (%s,%s,%s)",
+        (request_id, request["requested_amount"], rate),
         commit=True,
     )
     return {
         "request_id": request_id,
         "status": "successful",
-        "approved_amount": float(request["amount"]),
+        "approved_amount": float(request["requested_amount"]),
         "rate": float(rate),
     }

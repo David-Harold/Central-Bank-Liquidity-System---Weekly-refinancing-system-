@@ -23,9 +23,12 @@ def open_operation(rate):
         raise AllocationError(
             f"Cannot open a new operation: operation {open_op['operation_id']} is already open."
         )
+    
+    start_date = datetime.date.today()
+    end_date = start_date + datetime.timedelta(days=7)
     op_id = db.execute_query(
-        "INSERT INTO weekly_operations (policy_rate, status) VALUES (%s,'open')",
-        (rate,),
+        "INSERT INTO weekly_operations (start_date, end_date, policy_rate, status) VALUES (%s,'open')",
+        (start_date, end_date, rate),
         commit=True,
     )
     return {"operation_id": op_id, "policy_rate": rate, "status": "open"}
@@ -35,12 +38,12 @@ def close_operation(operation_id):
     op = db.fetch_one("SELECT * FROM weekly_operations WHERE operation_id=%s", (operation_id,))
     if not op:
         raise AllocationError(f"Operation {operation_id} not found.")
-    if op["status"] != "open":
+    if op["status"] != "Open":
         raise AllocationError(f"Operation {operation_id} is already '{op['status']}'.")
 
     db.execute_query(
-        "UPDATE weekly_operations SET status='closed', closed_at=%s WHERE operation_id=%s",
-        (datetime.datetime.now(), operation_id),
+        "UPDATE weekly_operations SET status='Closed' WHERE operation_id=%s",
+        (operation_id,),
         commit=True,
     )
     return {"operation_id": operation_id, "status": "closed"}

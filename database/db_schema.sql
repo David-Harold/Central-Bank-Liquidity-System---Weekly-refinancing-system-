@@ -37,6 +37,7 @@ CREATE TABLE weekly_operations (
 	operation_id INT PRIMARY KEY AUTO_INCREMENT,
 	start_date DATE NOT NULL,
 	end_date DATE NOT NULL,
+	policy_rate DECIMAL(5,2) NOT NULL,
 	status ENUM('Open','Closed') NOT NULL
 );
 
